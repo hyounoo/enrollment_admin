@@ -26,7 +26,7 @@
     </v-toolbar>
     <v-content>
       <router-view/>
-    </v-content>
+    </v-content>    
     <v-footer app>
       <span>&copy; 2017</span>
     </v-footer>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
       drawer: false,
@@ -58,20 +58,15 @@ export default {
         }
       ],
       title: 'Enrollment Service'
-    }
-  },
-  method: {
-    redirect: function(url){
-      window.location.href = url
-    }
+    };
   }
-}
+};
 </script>
 <style scoped>
 #app > div > nav > div > div.toolbar__items > img {
-    display: inline-flex;
-    vertical-align: middle;
-    padding: 13px 0 13px;
-    width: 35px;
+  display: inline-flex;
+  vertical-align: middle;
+  padding: 13px 0 13px;
+  width: 35px;
 }
 </style>
