@@ -27,7 +27,6 @@
     <v-content>
       <router-view/>
     </v-content>
-    
     <v-footer app>
       <span>&copy; 2017</span>
     </v-footer>
@@ -36,8 +35,8 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       drawer: false,
       fixed: true,
@@ -69,7 +68,6 @@ export default {
 }
 </script>
 <style scoped>
-
 #app > div > nav > div > div.toolbar__items > img {
     display: inline-flex;
     vertical-align: middle;
