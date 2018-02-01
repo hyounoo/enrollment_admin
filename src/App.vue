@@ -12,7 +12,7 @@
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-              <v-list-tile-title v-text="item.title"></v-list-tile-title>            
+              <v-list-tile-title  v-text="item.title"></v-list-tile-title>            
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -21,8 +21,12 @@
       <v-btn icon @click.stop="drawer = !drawer">
         <v-icon>menu</v-icon>
       </v-btn>
-      <v-toolbar-items><img :src="require('@/assets/android-icon-72x72.png')" alt="Marsh"></v-toolbar-items>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-items>
+        <img :src="require('@/assets/android-icon-72x72.png')" alt="Marsh">
+      </v-toolbar-items>      
+      <v-toolbar-title>
+        <v-btn flat :to="'/home'" v-text="title"></v-btn>
+      </v-toolbar-title>
     </v-toolbar>
     <v-content>
       <router-view/>

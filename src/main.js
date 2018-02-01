@@ -7,7 +7,7 @@ import Vuex from 'vuex'
 import App from './App';
 import router from './router';
 import Vuetify from 'vuetify';
-import store from './store/surveyStore';
+import store from './store/store';
 
 
 Vue.use(Vuetify, Vuex,{

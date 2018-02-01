@@ -449,7 +449,7 @@ const surveys = [{
 }];
 
 export default {
-    getSurveys (searchVM, callBack){
-      setTimeout(() => callBack(surveys), 3000);
-    }
+  getSurveys(searchVM, callBack) {
+    setTimeout(() => callBack(surveys), 3000);
+  }
 };

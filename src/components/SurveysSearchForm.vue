@@ -42,15 +42,16 @@ export default {
           ClientName: this.clientName,
           Year: this.year
         };
-        this.$store.dispatch('fetchSurveys', searchVM);
+        this.$store.dispatch("setLoadingStatus", true);
+        this.$store
+          .dispatch("surveysModule/fetchSurveys", searchVM)
+          .then(() => this.$store.dispatch("setLoadingStatus", false));
       }
     },
     clear() {
       this.$refs.form.reset();
     },
-    create(){
-
-    }
+    create() {}
   },
   components: { ClientAutoComplete }
 };
