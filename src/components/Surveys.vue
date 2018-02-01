@@ -6,18 +6,27 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 import SurveysSearchForm from "./SurveysSearchForm";
 import SurveyList from "./SurveyList";
 
 export default {
   name: "surveys",
   components: { SurveysSearchForm, SurveyList },
-  created() {    
+  created() {
+    let searchVM = {
+      ClientName: "m",
+      Year: this.year
+    };
+    
     this.$store.dispatch("setLoadingStatus", true);
     this.$store
-      .dispatch("surveysModule/fetchSurveys")
-      .then(() => this.$store.dispatch("setLoadingStatus", false));
+      .dispatch("surveysModule/fetchYears")
+      .then(
+        this.$store
+          .dispatch("surveysModule/fetchSurveys", searchVM)
+          .then(() => this.$store.dispatch("setLoadingStatus", false))
+      );
   }
 };
 </script>

@@ -1,16 +1,14 @@
 <template>
-  <v-form v-model="valid" ref="form" lazy-validation >
+  <v-form v-model="valid" ref="form" lazy-validation >    
       <v-layout row wrap justify-center class="my-5" elevation-9 ml-3 mr-3 pa-2>
         <v-flex xs12 sm3 pl-2 pr-2>
-          <!-- <ClientAutoComplete label="ClientName" v-model="clientName" :rules="clientNameRules" required></ClientAutoComplete> -->
-          <v-text-field label="ClientName" v-model="clientName"></v-text-field>
+          <ClientAutoComplete label="ClientName" v-model="client"></ClientAutoComplete>
         </v-flex>        
         <v-flex xs12 sm3 pl-2 pr-2>
-          <v-select label="Select Year" v-model="year" :items="yearList"></v-select>
+          <v-select label="Select Year" v-model="year" :items="yearList" clearable></v-select>
         </v-flex>
-        <v-flex xs12 sm6>
-          <v-btn @click="submit" :disabled="!valid" >Search</v-btn>
-          <v-btn @click="clear">Clear</v-btn>
+        <v-flex xs12 sm6 pt-2>
+          <v-btn @click="submit" :disabled="!valid" >Search</v-btn>          
           <v-btn @click="create" class="right">Create</v-btn>
         </v-flex>
       </v-layout>
@@ -18,40 +16,41 @@
 </template>
 
 <script>
-import ClientAutoComplete from "./ClientAutoComplete";
+import ClientAutoComplete from './ClientAutoComplete';
 
 export default {
-  name: "surveys-search-form",
+  name: 'surveys-search-form',
   data: () => ({
     valid: true,
-    clientId: "",
-    clientName: "",
-    searchString: "",
-    // clientNameRules: [
-    //   v => !!v || "ClientName is required"
-    // ],
+    client: '',
+    searchString: '',
     year: null,
-    yearList: ["Item 1", "Item 2", "Item 3", "Item 4"],
     checkbox: false
   }),
+  computed: {
+    yearList() {
+      return this.$store.state.surveysModule.years;
+    }
+  },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
         // Native form submission is not yet supported
         let searchVM = {
-          ClientName: this.clientName,
+          ClientId: this.client? this.client.Key: null,
           Year: this.year
         };
-        this.$store.dispatch("setLoadingStatus", true);
+
+        this.$store.dispatch('setLoadingStatus', true);
         this.$store
-          .dispatch("surveysModule/fetchSurveys", searchVM)
-          .then(() => this.$store.dispatch("setLoadingStatus", false));
+          .dispatch('surveysModule/fetchSurveys', searchVM)
+          .then(() => this.$store.dispatch('setLoadingStatus', false));
       }
     },
-    clear() {
-      this.$refs.form.reset();
-    },
-    create() {}
+    create() {},
+    clientSelected(selectedClient){
+      alert(selectedClient);
+    }
   },
   components: { ClientAutoComplete }
 };
