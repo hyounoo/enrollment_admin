@@ -1,6 +1,5 @@
 import surveysApi from '../../api/surveys-api';
 
-
 const namespaced = true;
 
 const state = {
@@ -36,5 +35,5 @@ export default {
     namespaced,
     state,
     actions,
-    mutation
+    mutations
 };

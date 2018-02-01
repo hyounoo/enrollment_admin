@@ -1,60 +1,9 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import surveysApi from '../api/surveys-api';
+import surveysModule from './modules/surveysModule';
+import surveyModule from './modules/surveyModule';
 
 Vue.use(Vuex);
-
-const surveysModule = {
-  namespaced: true,
-  state: {
-    surveys: [],
-    loading: false,
-  },
-  actions: {    
-    fetchSurveys(
-      context,
-      searchVM
-    ) {      
-      return new Promise((resolve, reject) => {
-        // make the call
-        // run setSurveys mutation
-        surveysApi.getSurveys(searchVM, s => {
-          console.log(searchVM);
-          context.commit('setSurveys', s);          
-          resolve();          
-        });
-      });
-    }
-  },
-  mutations: {
-    setSurveys(state, surveys) {
-      // update surveys
-      state.surveys = surveys;
-    }
-  }
-};
-
-const surveyModule = {
-  namespaced: true,
-  state: {
-    survey: null    
-  },
-  actions: {    
-    fetchSurveys(
-      context,
-      searchVM
-    ) {      
-      return new Promise((resolve, reject) => {
-        // make the call
-        // run setSurveys mutation
-        surveysApi.getSurveys(searchVM, s => {
-          console.log('Does nothing it\'s a test');          
-          resolve();          
-        });
-      });
-    }
-  },
-}
 
 export default new Vuex.Store({
   state:{

@@ -35,5 +35,5 @@ export default {
     namespaced,
     state,
     actions,
-    mutation
+    mutations
 };
