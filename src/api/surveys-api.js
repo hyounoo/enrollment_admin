@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const url = 'http://localhost/enrollmentservice/newapi/';
 
-export default {
+export default {  
   getClients(clientName, callBack){    
     axios.get(url + 'ClientList/' + clientName)
     .then(response => {
@@ -16,6 +16,16 @@ export default {
   },
   getYears(callBack){    
     axios.get(url + 'YearList')
+    .then(response => {
+      // JSON responses are automatically parsed.
+      callBack(response.data);
+    })
+    .catch(e => {
+      callBack(response.data);
+    });
+  },
+  getSurveyStatus(callBack){    
+    axios.get(url + 'SurveyStatus')
     .then(response => {
       // JSON responses are automatically parsed.
       callBack(response.data);

@@ -1,10 +1,13 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/components/Home'
-import Surveys from '@/components/Surveys'
-import Reports from '@/components/Reports'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/components/Home';
+import Surveys from '@/components/Surveys';
+import Survey from '@/components/Survey';
+import Reports from '@/components/Reports';
 
-Vue.use(Router)
+import SurveyContent from '@/components/SurveyContent';
+
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -25,9 +28,19 @@ export default new Router({
       component: Surveys
     },
     {
+      path: '/survey/:id',
+      name: 'Survey',
+      component: Survey
+    },
+    {
       path: '/reports',
       name: 'Reports',
       component: Reports
+    },
+    {
+      path: '/SurveyContent',
+      name: 'Survey Content',
+      component: SurveyContent
     }
   ]
-})
+});

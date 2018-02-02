@@ -17,16 +17,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app :fixed="fixed">
-      <v-btn icon @click.stop="drawer = !drawer">
-        <v-icon>menu</v-icon>
-      </v-btn>
-      <v-toolbar-items>
-        <img :src="require('@/assets/android-icon-72x72.png')" alt="Marsh">
-      </v-toolbar-items>      
-      <v-toolbar-title>
-        <v-btn flat :to="'/home'" v-text="title"></v-btn>
-      </v-toolbar-title>
+    <v-toolbar app :fixed="fixed">      
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <router-link :to="'/home'">
+        <img :src="require('@/assets/android-icon-36x36.png')" alt="Marsh">
+      </router-link>
+      <v-toolbar-title v-text="title"></v-toolbar-title>
     </v-toolbar>
     <v-content>
       <router-view/>
@@ -67,10 +63,4 @@ export default {
 };
 </script>
 <style scoped>
-#app > div > nav > div > div.toolbar__items > img {
-  display: inline-flex;
-  vertical-align: middle;
-  padding: 13px 0 13px;
-  width: 35px;
-}
 </style>

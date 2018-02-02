@@ -1,35 +1,36 @@
-const survey = {
-  "SVY_SURVEYID": 100441,
-  "SVY_SURVEYTITLE": "Robert Bosch",
-  "SVY_DESCRIPTION": null,
-  "SVY_YEAR": "2018",
-  "SVY_SURVEYSTARTDATE": "2018-01-30T00:00:00",
-  "SVY_SURVEYENDDATE": "2018-02-28T00:00:00",
-  "SVY_PROGRAMID": null,
-  "SVY_CLIENTID": 243.0,
-  "SVY_CLIENTNAME": "ROBERT BOSCH ",
-  "SVY_ASSIGNEEUSERID": null,
-  "SVY_SURVEYSTATUSCODE": "SST_TEMP_STARTED",
-  "SVY_ISDELETED": null,
-  "SVY_CREATEDBY": null,
-  "SVY_CREATEDDATE": null,
-  "SVY_MODIFIEDBY": null,
-  "SVY_MODIFIEDDATE": null,
-  "SVY_DELETEDBY": null,
-  "SVY_DELETEDDATE": null,
-  "SVY_INSURANCESTARTDATEFORCALC": null,
-  "SVY_PREVIOUSPROGRAMID": null,
-  "SVY_SKIPSTEP_PLANBASIC": false,
-  "SVY_SKIPSTEP_PLANTOPUP": false,
-  "SVY_SUMMARYDISPLAY_PLANBASIC": false,
-  "SVY_SUMMARYDISPLAY_PLANTOPUP": false,
-  "SVY_SUMMARYDISPLAY_PREMIUM": false,
-  "SVY_CHILDAGECHECK_ISENABLED": false,
-  "SVY_CHILDAGECHECK_BORNSINCE": null
-};
+import axios from 'axios';
+
+const url = 'http://localhost/enrollmentservice/newapi/';
 
 export default {
-  getSurveys(id, callBack) {
-    setTimeout(() => callBack(survey), 1000);
+  getAssignees(callBack){    
+    axios.get(url + 'Assignees')
+    .then(response => {
+      // JSON responses are automatically parsed.
+      callBack(response.data);
+    })
+    .catch(e => {
+      callBack(response.data);
+    });
+  },
+  getPrograms(clientId, callBack){    
+    axios.get(url + 'ProgramList/' + clientId)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      callBack(response.data);
+    })
+    .catch(e => {
+      callBack(response.data);
+    });
+  },
+  getSurvey(id, callBack) {
+    axios.get(url + 'SurveyHeader/' + id)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      callBack(response.data);
+    })
+    .catch(e => {
+      callBack(response.data);
+    });
   }
 };

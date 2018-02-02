@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="surveys" class="flex xs11">
     <SurveysSearchForm></SurveysSearchForm>
     <SurveyList></SurveyList> 
   </div>
@@ -15,17 +15,21 @@ export default {
   components: { SurveysSearchForm, SurveyList },
   created() {
     let searchVM = {
-      ClientName: "m",
+      ClientName: "",
       Year: this.year
     };
-    
+
     this.$store.dispatch("setLoadingStatus", true);
     this.$store
-      .dispatch("surveysModule/fetchYears")
+      .dispatch("surveysModule/fetchSurveyStatus")
       .then(
         this.$store
-          .dispatch("surveysModule/fetchSurveys", searchVM)
-          .then(() => this.$store.dispatch("setLoadingStatus", false))
+          .dispatch("surveysModule/fetchYears")
+          // .then(
+          //   this.$store
+          //     .dispatch("surveysModule/fetchSurveys", searchVM)
+              .then(() => this.$store.dispatch("setLoadingStatus", false))
+          //)
       );
   }
 };
@@ -33,16 +37,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
+#surveys{
+  margin: 0 auto;
 }
 </style>

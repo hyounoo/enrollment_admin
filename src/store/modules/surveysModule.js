@@ -6,6 +6,7 @@ const state = {
   clients: [],
   years: [],
   surveys: [],
+  surveyStatuses: [],
   loading: false,
 };
 
@@ -30,6 +31,16 @@ const actions = {
       });
     });
   },
+  fetchSurveyStatus(context) {
+    return new Promise((resolve, reject) => {
+      // make the call      
+      surveysApi.getSurveyStatus(s => {
+        // run setSurveyStatusList mutation
+        context.commit('setSurveyStatus', s);
+        resolve();
+      });
+    });
+  },
   fetchSurveys(context, searchVM) {
     return new Promise((resolve, reject) => {
       // make the call
@@ -39,7 +50,7 @@ const actions = {
         resolve();
       });
     });
-  }
+  }  
 };
 
 const mutations = {
@@ -50,6 +61,10 @@ const mutations = {
   setYears(state, years) {
     // update surveys
     state.years = years;
+  },
+  setSurveyStatus(state, surveyStatuses){
+    // update surveyStatuses
+    state.surveyStatuses = surveyStatuses;
   },
   setSurveys(state, surveys) {
     // update surveys
