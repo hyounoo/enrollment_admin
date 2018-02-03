@@ -18,14 +18,11 @@
         </v-text-field>
         </v-flex>
         <v-flex xs12 sm4 pl-2 pr-2>
-          <v-text-field label="SVY_CLIENTNAME"
-            v-model="survey.SVY_CLIENTNAME"
-            :rules="requiredRules('SVY_CLIENTNAME')">
-          </v-text-field>
+          <ClientAutoComplete :label="'SVY_CLIENTNAME'" v-model="client" :rules="requiredRules('SVY_CLIENTNAME')"></ClientAutoComplete>
         </v-flex>
-
         <v-flex xs12 sm4 pl-2 pr-2>
-          <v-menu lazy :close-on-content-click="true" v-model="startDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
+          <v-menu lazy :close-on-content-click="true" 
+            v-model="startDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
             <v-text-field              
               label="SVY_SURVEYSTARTDATE"
               v-model="survey.SVY_SURVEYSTARTDATE"              
@@ -36,7 +33,8 @@
           </v-menu>
         </v-flex>
         <v-flex xs12 sm4 pl-2 pr-2>
-          <v-menu lazy :close-on-content-click="true" v-model="endDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
+          <v-menu lazy :close-on-content-click="true" 
+            v-model="endDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
             <v-text-field              
               label="SVY_SURVEYENDDATE"
               v-model="survey.SVY_SURVEYENDDATE"              
@@ -47,7 +45,8 @@
           </v-menu>
         </v-flex>
         <v-flex xs12 sm4 pl-2 pr-2>
-          <v-menu lazy :close-on-content-click="true" v-model="insureranceDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
+          <v-menu lazy :close-on-content-click="true" 
+            v-model="insureranceDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
             <v-text-field              
               label="SVY_INSURANCESTARTDATEFORCALC"
               v-model="survey.SVY_INSURANCESTARTDATEFORCALC"              
@@ -57,7 +56,6 @@
             <v-date-picker v-model="survey.SVY_INSURANCESTARTDATEFORCALC" no-title scrollable actions></v-date-picker>
           </v-menu>
         </v-flex>
-
         <v-flex xs12 sm4 pl-2 pr-2>
           <v-select label="SVY_ASSIGNEEUSERID"
             v-model="survey.SVY_ASSIGNEEUSERID" 
@@ -78,11 +76,11 @@
             :rules="requiredRules('SVY_SURVEYSTATUSCODE')"
             :items="surveyStatuses" item-text="Value" item-value="Key" clearable>
           </v-select>
-        </v-flex>
+        </v-flex>        
         <v-flex xs12 pl-2 pr-2>
           <v-text-field label="SVY_DESCRIPTION"            
             v-model="survey.SVY_DESCRIPTION"
-            :rules="[(v) => v.length <= 1000 || 'Max 1000 characters']"
+            :rules="maxCharRules('SVY_DESCRIPTION', '1000')"
             :counter="1000" multi-line>
           </v-text-field>
         </v-flex>
@@ -91,13 +89,17 @@
             v-model="survey.SVY_CHILDAGECHECK_ISENABLED">
           </v-checkbox>
         </v-flex>
-        <v-flex xs12 sm4 pl-2 pr-2>          
-          <v-text-field              
-            v-if="survey.SVY_CHILDAGECHECK_ISENABLED"
-            label="SVY_CHILDAGECHECK_BORNSINCE"
-            v-model="survey.SVY_CHILDAGECHECK_BORNSINCE"              
-          ></v-text-field>
-        </v-menu>
+        <v-flex xs12 sm4 pl-2 pr-2>
+          <v-menu v-if="survey.SVY_CHILDAGECHECK_ISENABLED"  lazy :close-on-content-click="true" 
+            v-model="childBornDatePicker" transition="scale-transition" offset-y full-width :nudge-right="40" max-width="290px" min-width="290px" >
+            <v-text-field              
+              label="SVY_CHILDAGECHECK_BORNSINCE"
+              v-model="survey.SVY_CHILDAGECHECK_BORNSINCE"              
+              :rules="requiredRules('SVY_CHILDAGECHECK_BORNSINCE')"              
+              append-icon="event" slot="activator" readonly
+            ></v-text-field>
+            <v-date-picker v-model="survey.SVY_CHILDAGECHECK_BORNSINCE" no-title scrollable actions></v-date-picker>
+          </v-menu>
         </v-flex>        
         <v-flex sm4 pl-2 pr-2>
         </v-flex>
@@ -127,7 +129,7 @@
           <v-checkbox label="SVY_SUMMARYDISPLAY_PREMIUM"
             v-model="survey.SVY_SUMMARYDISPLAY_PREMIUM">
           </v-checkbox>
-        </v-flex>      
+        </v-flex>
       </v-layout>
       <v-flex xs12>
         <v-btn @click="submit" :disabled="!valid" >Submit </v-btn>
@@ -138,10 +140,13 @@
 </template>
 
 <script>
+import ClientAutoComplete from './ClientAutoComplete';
+
 export default {
   data() {
     return {
       valid: true,
+      client: null,      
       startDatePicker: false,
       endDatePicker: false,
       insureranceDatePicker: false,
@@ -150,19 +155,28 @@ export default {
   },
   computed: {
     survey() {
-      return this.$store.state.surveyModule.survey;
+      return this.$store.state.surveysModule.survey;
     },
     assignees() {
-      return this.$store.state.surveyModule.assignees;
+      return this.$store.state.assigneesModule.assignees;
     },
     programs() {
-      return this.$store.state.surveyModule.programs;
+      return this.$store.state.programsModule.programs;
     },
     surveyStatuses() {
-      return this.$store.state.surveysModule.surveyStatuses;
+      return this.$store.state.surveyStatusesModule.surveyStatuses;
+    }
+  },
+  watch: {
+    survey(val) {
+      var client = (this.survey.SVY_CLIENTID && this.survey.SVY_CLIENTNAME) ? { Key: this.survey.SVY_CLIENTID, Value: this.survey.SVY_CLIENTNAME} : null;
+      this.client = client;
     }
   },
   methods: {
+    maxCharRules(name, count){
+      return [v => v? v.length <= count : true || 'Max ' + count + ' characters'];
+    },
     requiredRules(name) {
       return [v => !!v || name + " is required"];
     },
@@ -179,8 +193,9 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
-    }
-  }
+    }    
+  },
+  components: { ClientAutoComplete }
 };
 </script>
 

@@ -1,7 +1,12 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import assigneesModule from './modules/assigneesModule';
+import clientsModule from './modules/clientsModule';
+import programsModule from './modules/programsModule';
 import surveysModule from './modules/surveysModule';
-import surveyModule from './modules/surveyModule';
+import surveyStatusesModule from './modules/surveyStatusesModule';
+import yearsModule from './modules/yearsModule';
+// import surveyModule from './modules/surveyModule';
 
 Vue.use(Vuex);
 
@@ -20,7 +25,11 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    assigneesModule: assigneesModule,
+    clientsModule: clientsModule,
+    programsModule: programsModule,
     surveysModule: surveysModule,
-    surveyModule: surveyModule
+    surveyStatusesModule: surveyStatusesModule,
+    yearsModule: yearsModule
   }
 });

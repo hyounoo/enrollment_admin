@@ -22,14 +22,13 @@ export default {
   name: 'surveys-search-form',
   data: () => ({
     valid: true,
-    client: '',
-    searchString: '',
+    client: null,
     year: null,
     checkbox: false
   }),
   computed: {
     yearList() {
-      return this.$store.state.surveysModule.years;
+      return this.$store.state.yearsModule.years;
     }
   },
   methods: {
@@ -47,10 +46,7 @@ export default {
           .then(() => this.$store.dispatch('setLoadingStatus', false));
       }
     },
-    create() {},
-    clientSelected(selectedClient){
-      alert(selectedClient);
-    }
+    create() {}
   },
   components: { ClientAutoComplete }
 };

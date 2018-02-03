@@ -21,10 +21,10 @@ export default {
 
     this.$store.dispatch("setLoadingStatus", true);
     this.$store
-      .dispatch("surveysModule/fetchSurveyStatus")
+      .dispatch("surveyStatusesModule/fetchSurveyStatus")
       .then(
         this.$store
-          .dispatch("surveysModule/fetchYears")
+          .dispatch("yearsModule/fetchYears")
           // .then(
           //   this.$store
           //     .dispatch("surveysModule/fetchSurveys", searchVM)

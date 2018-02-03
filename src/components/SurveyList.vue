@@ -45,7 +45,7 @@ export default {
       return this.$store.state.surveysModule.surveys;
     },
     surveyStatus() {
-      return this.$store.state.surveysModule.surveyStatuses;
+      return this.$store.state.surveyStatusesModule.surveyStatuses;
     }
   },
   methods: {
