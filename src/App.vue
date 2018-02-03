@@ -35,32 +35,103 @@
 
 <script>
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {
+      mockup: [
+        {
+          text: "Same but with checkboxes",
+          children: [
+            {
+              text: "initially selected",
+              selected: true
+            },
+            {
+              text: "custom icon",
+              icon: "fa fa-warning icon-state-danger"
+            },
+            {
+              text: "initially open",
+              icon: "fa fa-folder icon-state-default",
+              opened: true,
+              children: [
+                {
+                  text: "Another node"
+                }
+              ]
+            },
+            {
+              text: "custom icon",
+              icon: "fa fa-warning icon-state-warning"
+            },
+            {
+              text: "disabled node",
+              icon: "fa fa-check icon-state-success",
+              disabled: true
+            }
+          ]
+        },
+        {
+          text: "Same but with checkboxes",
+          opened: true,
+          children: [
+            {
+              text: "initially selected",
+              selected: true
+            },
+            {
+              text: "custom icon",
+              icon: "fa fa-warning icon-state-danger"
+            },
+            {
+              text: "initially open",
+              icon: "fa fa-folder icon-state-default",
+              opened: true,
+              children: [
+                {
+                  text: "Another node"
+                }
+              ]
+            },
+            {
+              text: "custom icon",
+              icon: "fa fa-warning icon-state-warning"
+            },
+            {
+              text: "disabled node",
+              icon: "fa fa-check icon-state-success",
+              disabled: true
+            }
+          ]
+        },
+        {
+          text: "And wholerow selection"
+        }
+      ],
       drawer: false,
       fixed: true,
       items: [
         {
-          icon: 'home',
-          title: 'Home',
-          url: '/home'
+          icon: "home",
+          title: "Home",
+          url: "/home"
         },
         {
-          icon: 'bubble_chart',
-          title: 'Surveys',
-          url: '/surveys'
+          icon: "bubble_chart",
+          title: "Surveys",
+          url: "/surveys"
         },
         {
-          icon: 'bubble_chart',
-          title: 'Reports',
-          url: '/reports'
+          icon: "bubble_chart",
+          title: "Reports",
+          url: "/reports"
         }
       ],
-      title: 'Enrollment Service'
+      title: "Enrollment Service"
     };
   }
 };
 </script>
 <style scoped>
+
 </style>

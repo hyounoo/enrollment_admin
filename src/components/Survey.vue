@@ -14,7 +14,7 @@
     </v-tabs-bar>
     <v-tabs-items>
       <v-tabs-content :id="'tab-header'">
-        <SurveyHeader></SurveyHeader>          
+        <SurveyHeader></SurveyHeader>
       </v-tabs-content>
       <v-tabs-content :id="'tab-plan'">
         <SurveyPlan></SurveyPlan>          
@@ -34,9 +34,6 @@ import SurveyContent from "./SurveyContent";
 export default {
   data() {
     return {
-      active: null,
-      text: "test",
-      model: "tab-header",
       surveyId: this.$route.params.id
     };
   },
