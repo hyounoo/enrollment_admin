@@ -1,17 +1,16 @@
-<template>
-  
+<template>    
+  <div v-if="!$store.state.loading">
+    <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
+  </div>
+  <div v-else id="surveyContent" class="flex xs11">
+
+  </div>  
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      items: ["Item One", "Item Seventeen", "Item Five"],      
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    };
-  }
-};
+
+}
 </script>
 
 <style>
