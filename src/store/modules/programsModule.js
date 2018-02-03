@@ -1,5 +1,4 @@
 import programsApi from '../../api/programs-api';
-import moment from 'moment';
 
 const namespaced = true;
 

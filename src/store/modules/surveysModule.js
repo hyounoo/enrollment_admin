@@ -29,9 +29,7 @@ const actions = {
         s.SVY_SURVEYSTARTDATE = moment(s.SVY_SURVEYSTARTDATE).format('YYYY-MM-DD');
         s.SVY_SURVEYENDDATE = moment(s.SVY_SURVEYENDDATE).format('YYYY-MM-DD');
         s.SVY_INSURANCESTARTDATEFORCALC = moment(s.SVY_INSURANCESTARTDATEFORCALC).format('YYYY-MM-DD');
-        console.log('from: ' + s.SVY_CHILDAGECHECK_BORNSINCE);
         s.SVY_CHILDAGECHECK_BORNSINCE = s.SVY_CHILDAGECHECK_BORNSINCE ? moment(s.SVY_CHILDAGECHECK_BORNSINCE).format('YYYY-MM-DD') : null;
-        console.log('to: ' + s.SVY_CHILDAGECHECK_BORNSINCE);
         context.commit('setSurvey', s);
         resolve();
       });

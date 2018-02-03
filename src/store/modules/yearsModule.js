@@ -1,5 +1,4 @@
 import yearsApi from '../../api/years-api';
-import moment from 'moment';
 
 const namespaced = true;
 

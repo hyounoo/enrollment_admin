@@ -1,5 +1,4 @@
 import surveyStatusesApi from '../../api/surveyStatuses-api';
-import moment from 'moment';
 
 const namespaced = true;
 

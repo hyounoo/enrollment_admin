@@ -35,8 +35,8 @@ export default {
   data() {
     return {
       active: null,
-      text: 'test',
-      model: 'tab-header',
+      text: "test",
+      model: "tab-header",
       surveyId: this.$route.params.id
     };
   },
@@ -48,13 +48,15 @@ export default {
   created() {
     this.$store.dispatch("setLoadingStatus", true);
     this.$store.dispatch("surveysModule/clearSurvey");
-    // this.$store.dispatch("assingeesModule/fetchAssignees");
-    this.$store.dispatch("surveyStatusesModule/fetchSurveyStatus");    
-    this.$store.dispatch("surveysModule/fetchSurvey", this.surveyId).then(() => {
-      this.$store.dispatch("programsModule/fetchPrograms", this.survey.SVY_CLIENTID)
-      //.then(() => this.$store.dispatch("surveysModule/fetchClients", this.survey.SVY_CLIENTNAME)
-        .then(() => this.$store.dispatch("setLoadingStatus", false));
-    });
+    this.$store.dispatch("surveyStatusesModule/fetchSurveyStatus");
+    this.$store.dispatch("assigneesModule/fetchAssignees");
+    this.$store
+      .dispatch("surveysModule/fetchSurvey", this.surveyId)
+      .then(() => {
+        this.$store
+          .dispatch("programsModule/fetchPrograms", this.survey.SVY_CLIENTID)
+          .then(() => this.$store.dispatch("setLoadingStatus", false));
+      });
   },
   components: { SurveyHeader, SurveyPlan, SurveyContent }
 };

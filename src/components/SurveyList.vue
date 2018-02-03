@@ -1,7 +1,5 @@
 <template>
-  <v-layout row wrap justify-center class="my-5" elevation-9 ml-3 mr-3>
-    <!-- <img v-if="$store.state.loading" src="../assets/loading.gif">
-    <v-data-table v-if="!$store.state.loading" :headers="headers" :items="surveys" rows-per-page-text=""> -->
+  <v-layout row wrap justify-center class="my-5" elevation-9 ml-3 mr-3>    
     <v-data-table :headers="headers" :items="surveys" rows-per-page-text="" :loading="$store.state.loading">
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
@@ -30,13 +28,13 @@ export default {
   data() {
     return {
       headers: [
-        { text: "SVY_SURVEYID", value: "SVY_SURVEYID" },
-        { text: "SVY_SURVEYTITLE", value: "SVY_SURVEYTITLE" },
-        { text: "SVY_CLIENTNAME", value: "SVY_CLIENTNAME" },
-        { text: "SVY_YEAR", value: "SVY_YEAR" },
-        { text: "SVY_SURVEYSTARTDATE", value: "SVY_SURVEYSTARTDATE" },
-        { text: "SVY_SURVEYENDDATE", value: "SVY_SURVEYENDDATE" },
-        { text: "SVY_SURVEYSTATUSCODE", value: "SVY_SURVEYSTATUSCODE" }
+        { text: "SVY_SURVEYID", value: "SVY_SURVEYID", align: 'center' },
+        { text: "SVY_SURVEYTITLE", value: "SVY_SURVEYTITLE", align: 'center' },
+        { text: "SVY_CLIENTNAME", value: "SVY_CLIENTNAME", align: 'center' },
+        { text: "SVY_YEAR", value: "SVY_YEAR", align: 'center' },
+        { text: "SVY_SURVEYSTARTDATE", value: "SVY_SURVEYSTARTDATE", align: 'center' },
+        { text: "SVY_SURVEYENDDATE", value: "SVY_SURVEYENDDATE", align: 'center' },
+        { text: "SVY_SURVEYSTATUSCODE", value: "SVY_SURVEYSTATUSCODE", align: 'center' }
       ]
     };
   },
@@ -49,9 +47,6 @@ export default {
     }
   },
   methods: {
-    editItem(item) {
-      alert(item.SVY_SURVEYID);
-    },
     deleteItem(index) {
       // alert user for delete
       alert(index);

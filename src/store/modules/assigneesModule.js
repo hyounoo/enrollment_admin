@@ -1,5 +1,4 @@
-import assingeesApi from '../../api/assignees-api';
-import moment from 'moment';
+import assigneesApi from '../../api/assignees-api';
 
 const namespaced = true;
 
@@ -10,11 +9,11 @@ const state = {
 const actions = {
   fetchAssignees(context) {
     return new Promise((resolve, reject) => {
-      // make the call
-      // run setAssignees mutation
-      assingeesApi.getAssignees(a => {
+      // make the call      
+      assigneesApi.getAssignees(s => {
+        // run setAssignees mutation
         console.log('Assignees fetched from api');
-        context.commit('setAssignees', a);
+        context.commit('setAssignees', s);
         resolve();
       });
     });
@@ -22,10 +21,10 @@ const actions = {
 };
 
 const mutations = {
-  setAssignees(assingees){
-    // update assingees
-    console.log('set assingees: ' + assingees.length);
-    state.assingees = assingees;
+  setAssignees(state, assignees){
+    // update assignees
+    console.log('set assignees: ' + assignees.length);
+    state.assignees = assignees;
   }
 };
 

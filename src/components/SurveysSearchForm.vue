@@ -9,7 +9,7 @@
         </v-flex>
         <v-flex xs12 sm6 pt-2>
           <v-btn @click="submit" :disabled="!valid" >Search</v-btn>          
-          <v-btn @click="create" class="right">Create</v-btn>
+          <v-btn @click="create" :to="'/survey/0'" class="right">Create</v-btn>
         </v-flex>
       </v-layout>
     </v-form>
