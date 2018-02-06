@@ -10,7 +10,6 @@ import Vuetify from 'vuetify';
 import moment from 'moment';
 import store from './store/store';
 
-
 Vue.use(Vuetify, Vuex, {
   theme: {
     primary: "#1565C0",

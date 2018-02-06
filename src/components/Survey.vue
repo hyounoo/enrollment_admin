@@ -1,6 +1,6 @@
 <template>
-<v-tabs app centered>
-    <v-tabs-bar class="cyan" dark>
+<v-tabs app centered >
+    <v-tabs-bar class="cyan" dark >
       <v-tabs-slider class="yellow"></v-tabs-slider>
       <v-tabs-item :href="'#tab-header'">
         Survey Header
@@ -14,10 +14,10 @@
     </v-tabs-bar>
     <v-tabs-items>
       <v-tabs-content :id="'tab-header'">
-        <SurveyHeader></SurveyHeader>
+        <SurveyHeader></SurveyHeader>        
       </v-tabs-content>
       <v-tabs-content :id="'tab-plan'">
-        <SurveyPlan></SurveyPlan>          
+        <SurveyPlan></SurveyPlan>
       </v-tabs-content>
       <v-tabs-content :id="'tab-content'">
         <SurveyContent></SurveyContent>
@@ -49,7 +49,7 @@ export default {
     this.$store.dispatch("assigneesModule/fetchAssignees");
     this.$store
       .dispatch("surveysModule/fetchSurvey", this.surveyId)
-      .then(() => {
+      .then(() => {        
         this.$store
           .dispatch("programsModule/fetchPrograms", this.survey.SVY_CLIENTID)
           .then(() => this.$store.dispatch("setLoadingStatus", false));

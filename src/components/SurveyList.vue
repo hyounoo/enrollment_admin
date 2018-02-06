@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap justify-center class="my-5" elevation-9 ml-3 mr-3>    
-    <v-data-table :headers="headers" :items="surveys" rows-per-page-text="" :loading="$store.state.loading">
+    <v-data-table :headers="headers" :items="surveys" rows-per-page-text="" :loading="$store.state.loading" disable-initial-sort="true">
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
         <td class="text-xs-center">{{ props.item.SVY_SURVEYID }}</td>

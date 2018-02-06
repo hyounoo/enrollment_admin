@@ -25,11 +25,7 @@ export default {
       .then(
         this.$store
           .dispatch("yearsModule/fetchYears")
-          // .then(
-          //   this.$store
-          //     .dispatch("surveysModule/fetchSurveys", searchVM)
-              .then(() => this.$store.dispatch("setLoadingStatus", false))
-          //)
+          .then(() => this.$store.dispatch("setLoadingStatus", false))
       );
   }
 };
@@ -37,7 +33,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#surveys{
+#surveys {
   margin: 0 auto;
 }
 </style>

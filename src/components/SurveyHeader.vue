@@ -3,8 +3,8 @@
     <div v-if="$store.state.loading">
       <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
     </div>
-    <div v-else id="surveyHeader" class="flex xs11">
-      <v-layout row wrap class="my-5" elevation-9 ml-3 mr-3 pa-4>      
+    <div v-else id="surveyHeader" class="flex xs12">
+      <v-layout row wrap class="my-3" elevation-9 ml-3 mr-3 pa-1>      
         <v-flex xs12 sm4 pl-2 pr-2>
           <v-text-field label="SVY_SURVEYTITLE"
             v-model="survey.SVY_SURVEYTITLE"

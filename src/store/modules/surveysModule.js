@@ -37,7 +37,7 @@ const actions = {
   },
   clearSurvey(context){
     context.commit('clearSurvey');
-  }  
+  }
 };
 
 const mutations = {  

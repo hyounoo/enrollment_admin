@@ -6,6 +6,8 @@ import programsModule from './modules/programsModule';
 import surveysModule from './modules/surveysModule';
 import surveyStatusesModule from './modules/surveyStatusesModule';
 import yearsModule from './modules/yearsModule';
+import premiumsModule from './modules/premiumsModule';
+import plansModule from './modules/plansModule';
 // import surveyModule from './modules/surveyModule';
 
 Vue.use(Vuex);
@@ -19,7 +21,7 @@ export default new Vuex.Store({
       context.commit('setLoading', status);
     }
   },
-  mutations: {    
+  mutations: {
     setLoading(state, status){      
       state.loading = status;
     }
@@ -30,6 +32,8 @@ export default new Vuex.Store({
     programsModule: programsModule,
     surveysModule: surveysModule,
     surveyStatusesModule: surveyStatusesModule,
-    yearsModule: yearsModule
+    yearsModule: yearsModule,
+    premiumsModule: premiumsModule,
+    plansModule: plansModule
   }
 });

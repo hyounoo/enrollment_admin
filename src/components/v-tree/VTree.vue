@@ -1,47 +1,44 @@
 <template>
   <ul>
-    <v-treeItem class="v-treeItem" :model="treeData">
-    </v-treeItem>
-    </ul>
+    <v-treeItem class="v-treeItem" v-for="(item, index) in value" :key="item.id" 
+      :model="item" :treeTypes="treeTypes" 
+      @selected="selected" @contextCall="contextCall"></v-treeItem>            
+  </ul>
 </template>
 
 <script>
-
-import VTreeItem from './VTreeItem';
+import VTreeItem from "./VTreeItem";
 
 export default {
+  props: ["value", "treeTypes"],
   name: "v-tree",
   data: function() {
-    return {
-      treeData: {
-        name: "My Tree",
-        icon: "fa fa-user-o",
-        children: [
-          { name: "hello", icon: "fas fa-hospital-o", },
-          { name: "wat", icon: "fas fa-hospital-o", },
-          {
-            name: "child folder",
-            icon: "fa fa-hospital-o",
-            children: [
-              {
-                name: "child folder",
-                icon: "fa-plus-square"
-              },
-              { name: "hello", icon: "fa-plus-square" },
-              { name: "wat", icon: "fa-plus-square" }
-            ]
-          }
-        ]
-      }
-    };
-  },  
+    return {};
+  },
+  methods: {
+    selected(node) {
+      this.$emit('selected', node);
+    },
+    contextCall(e){
+      this.$emit('contextCall', e);
+    }
+  },
+  computed: {
+    // typeRule() {
+    //   var rootType = this.treeTypes.filter(t => t.type == "#");      
+    //   return rootType.length > 0 ? rootType[0] : null;
+    // }
+  },
   components: {
-      VTreeItem
+    VTreeItem
   }
 };
 </script>
 
-<style>
-
+<style scoped>
+ul{
+  position: relative;
+}
 </style>
+
 
