@@ -6,8 +6,9 @@
     <span class="tree-icon" :class="{ 'empty-toggle': !icon }" :key="icon">
       <i v-if="icon" class="far" :class="icon" ></i>
     </span>
-    <input type="radio" name="rad" v-model="checked" :id="model.id" :value="model.id">
-    <label class="tree-text" :for="model.id" @click="toggle" @contextmenu.prevent="showContextMenu">{{model.text}}</label>
+    <input type="radio" name="rad" v-model="checked" :id="model.id" :value="model.id">        
+    <label v-show="!edit" class="tree-text" :for="model.id" @click="toggle" @contextmenu.prevent="showContextMenu" key="label">{{model.text}}</label>    
+    <input v-show="edit" class="tree-text" v-model="model.text" :placeholder="model.text" key="input" @blur="blur">
     <div class="tree-children">
       <ul v-show="open" v-if="isFolder">
         <v-treeItem class="v-treeItem" v-for="(child, index) in model.children" :key="index" 
@@ -19,17 +20,17 @@
 </template>
 
 <script>
-
 export default {
   name: "v-treeItem",
   props: ["model", "treeTypes"],
   data: function() {
     return {
       open: false,
-      checked: null
+      checked: null,
+      edit: true
     };
   },
-  computed: {
+  computed: {  
     typeRule() {
       var typeRule = this.treeTypes.filter(t => t.type == this.model.type);
       return typeRule.length > 0 ? typeRule[0] : null;
@@ -42,29 +43,27 @@ export default {
     }
   },
   methods: {
+    blur(){
+      this.edit = false;
+    },
     selected(node) {
       this.checked = null;
       this.checked = this.model.id;
-      this.$emit('selected', node);
+      this.$emit("selected", node);
     },
-    contextCall(e){
-      this.$emit('contextCall', e);
+    contextCall(e) {
+      this.$emit("contextCall", e);
     },
-    showContextMenu(e){
+    showContextMenu(e) {
       this.open = true;
-      this.selected(this.model);
+      this.selected(this);
       this.contextCall(e);
     },
     toggle() {
       if (this.isFolder) {
-        this.open = open ? true : !this.open;
-      }       
-      this.selected(this.model);
-    },
-    addChild() {
-      this.model.children.push({
-        name: "new stuff"
-      });
+        this.open = !this.open;
+      }
+      this.selected(this);
     }
   }
 };
@@ -81,17 +80,19 @@ ul .tree-node {
   display: block;
   padding-left: 15px;
 }
-.empty-toggle {
-  margin-right: 5px;
+.toggle-icon {
+  display: inline-block;
+  width: 20px;
 }
+
 ul .tree-node :hover:before {
   background: rgba(190, 235, 255, 0.3);
 }
 
-ul .tree-node input[type='radio'] {
+ul .tree-node input[type="radio"] {
   display: none;
 }
-ul .tree-node input[type='radio']:checked + label:before {
+ul .tree-node input[type="radio"]:checked + label:before {
   background: rgba(83, 215, 220, 0.3);
 }
 

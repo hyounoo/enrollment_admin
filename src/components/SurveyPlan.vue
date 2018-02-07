@@ -7,14 +7,14 @@
           <v-flex xs12 sm3 pa-3 >
             <v-tree v-model="treeData" :treeTypes="treeTypes" @selected="treeNodeSelected" @contextCall="showContextMenu"></v-tree>
           </v-flex>
-          <v-flex xs12 sm9 v-if="premiums.length > 0" >
+          <v-flex xs12 sm9 v-if="selectedNode && selectedNode.model.type == 'Top-up'" >
             <v-data-table :headers="headers" :items="premiums" rows-per-page-text="" :loading="loading">
               <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
               <template slot="items" slot-scope="props">
-                <td class="text-xs-center">{{ props.item.RowNumber }}</td>
-                <td class="text-xs-center">{{ props.item.PLTP_GENDERBASICCODE }}</td>
-                <td class="text-xs-center">{{ props.item.PLTP_AGE }}</td>
-                <td class="text-xs-center">{{ props.item.PLTP_PREMIUMAMOUNT }}</td>
+                <td class="text-xs-center sm3">{{ props.item.RowNumber }}</td>
+                <td class="text-xs-center sm3">{{ props.item.PLTP_GENDERBASICCODE }}</td>
+                <td class="text-xs-center sm3">{{ props.item.PLTP_AGE }}</td>
+                <td class="text-xs-center sm3">{{ props.item.PLTP_PREMIUMAMOUNT }}</td>
               </template>  
             </v-data-table>
           </v-flex>
@@ -23,7 +23,7 @@
         <v-list>
           <v-list-tile avatar v-for="item in items" v-bind:key="item.title" @click="nodeCommand(item.title)">
             <v-list-tile-action>
-              <i v-if="item.icon" :class="item.icon"></i>
+              <i v-if="item.icon" :class="item.icon" style="margin:0 auto;"></i>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title v-text="item.title"></v-list-tile-title>
@@ -125,27 +125,27 @@ export default {
     nodeCommand(command){      
       console.log(command)
       switch(command){
-        case 'Create Basic':
+        case 'Create Basic':        
           var node = {
-            count:0,
-            id:0,
-            text:"Employee",
-            type:"FMM_EMPLOYEE",
+            text:"New Basic Plan",
+            type:"Basic",
             children: []
           };
-          this.selectedNode.children.push(node);
+          this.selectedNode.model.children.push(node);
 
         break;
         case 'Create Top-up':
           var node = {
-            count:0,
-            id:0,
-            text:"Employee",
-            type:"FMM_EMPLOYEE",
+            text:"New Top-up",
+            type:"Top-up",
             children: []
-          };
-          this.selectedNode.children.push(node);
+          };          
+          this.selectedNode.model.children.push(node);
 
+        break;
+        case 'Rename':
+          this.selectedNode.model.edit = true;
+          console.log(this.selectedNode.model);
         break;
         case 'Remove':
           
@@ -161,10 +161,11 @@ export default {
       })
     },
     treeNodeSelected(node) {
+      //console.log(node);
       this.selectedNode = node;
 
       this.items = [];
-      var typeRule = this.getTypeRule(this.selectedNode.type);
+      var typeRule = this.getTypeRule(this.selectedNode.model.type);
 
       typeRule.valid_children.map(function(type, key) {
         var childType = this.getTypeRule(type);        
@@ -173,12 +174,12 @@ export default {
       }, this);
       
       this.items.push({ title: 'Rename', icon: 'far fa-edit' });      
-      this.items.push({ title: 'Remove', icon: 'far fa-remove' });
+      this.items.push({ title: 'Remove', icon: 'far fa-trash-alt' });
 
-      if (node.type == "Top-up") {
+      if (this.selectedNode.model.type == "Top-up" && this.selectedNode.model.id) {
         this.loading = true;
         this.$store
-          .dispatch("premiumsModule/fetchPremiums", node.id)
+          .dispatch("premiumsModule/fetchPremiums", this.selectedNode.model.id)
           .then(() => (this.loading = false));
       } else {
         this.$store.dispatch("premiumsModule/clearPremiums");

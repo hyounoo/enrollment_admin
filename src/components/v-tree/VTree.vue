@@ -23,12 +23,6 @@ export default {
       this.$emit('contextCall', e);
     }
   },
-  computed: {
-    // typeRule() {
-    //   var rootType = this.treeTypes.filter(t => t.type == "#");      
-    //   return rootType.length > 0 ? rootType[0] : null;
-    // }
-  },
   components: {
     VTreeItem
   }

@@ -13,7 +13,8 @@ const actions = {
       premiumApi.getPremiums(premiumId, p => {
         // run premium mutation
         console.log('Premiums fetched from api');
-        context.commit('setPremiums', p);
+        if (p)
+          context.commit('setPremiums', p);
         resolve();
       });
     });
