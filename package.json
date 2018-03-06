@@ -16,9 +16,11 @@
     "babel-polyfill": "^6.26.0",
     "jshint": "^2.9.5",
     "moment": "^2.20.1",
+    "v-treeview": "0.0.9",
     "vue": "^2.5.2",
+    "vue-froala-wysiwyg": "^2.7.5",
     "vue-router": "^3.0.1",
-    "vuetify": "^0.17.6",
+    "vuetify": "^1.0.4",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

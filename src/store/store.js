@@ -8,7 +8,7 @@ import surveyStatusesModule from './modules/surveyStatusesModule';
 import yearsModule from './modules/yearsModule';
 import premiumsModule from './modules/premiumsModule';
 import plansModule from './modules/plansModule';
-// import surveyModule from './modules/surveyModule';
+import contentsModule from './modules/contentsModule';
 
 Vue.use(Vuex);
 
@@ -34,6 +34,7 @@ export default new Vuex.Store({
     surveyStatusesModule: surveyStatusesModule,
     yearsModule: yearsModule,
     premiumsModule: premiumsModule,
-    plansModule: plansModule
+    plansModule: plansModule,
+    contentsModule: contentsModule
   }
 });

@@ -1,6 +1,6 @@
 <template>
   <v-form v-model="valid" ref="form" lazy-validation >    
-      <v-layout row wrap justify-center class="my-5" elevation-9 ml-3 mr-3 pa-2>
+      <v-layout row wrap justify-center class="my-5" elevation-9 ml-3 mr-3 pa-3>
         <v-flex xs12 sm3 pl-2 pr-2>
           <ClientAutoComplete label="ClientName" v-model="client"></ClientAutoComplete>
         </v-flex>        

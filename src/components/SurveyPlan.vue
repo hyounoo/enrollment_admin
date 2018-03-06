@@ -3,23 +3,23 @@
     <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
   </div>
   <div v-else id="surveyPlan" class="flex xs12">
-      <v-layout row wrap class="my-3" elevation-9 ml-3 mr-3 >      
-          <v-flex xs12 sm3 pa-3 >
-            <v-tree v-model="treeData" :treeTypes="treeTypes" @selected="treeNodeSelected" @contextCall="showContextMenu"></v-tree>
-          </v-flex>
-          <v-flex xs12 sm9 v-if="selectedNode && selectedNode.model.type == 'Top-up'" >
-            <v-data-table :headers="headers" :items="premiums" rows-per-page-text="" :loading="loading">
-              <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-              <template slot="items" slot-scope="props">
-                <td class="text-xs-center sm3">{{ props.item.RowNumber }}</td>
-                <td class="text-xs-center sm3">{{ props.item.PLTP_GENDERBASICCODE }}</td>
-                <td class="text-xs-center sm3">{{ props.item.PLTP_AGE }}</td>
-                <td class="text-xs-center sm3">{{ props.item.PLTP_PREMIUMAMOUNT }}</td>
-              </template>  
-            </v-data-table>
-          </v-flex>
-      </v-layout>
-      <v-menu offset-y v-model="showMenu" absolute :position-x="x" :position-y="y">
+    <v-layout row wrap class="my-3" elevation-9 ml-3 mr-3 >      
+        <v-flex xs12 sm3 pa-3 >
+          <v-treeview v-model="treeData" :treeTypes="treeTypes" @selected="selected" :openAll="openAll" :contextItems="contextItems" @contextSelected="contextSelected"></v-treeview>
+        </v-flex>
+        <v-flex xs12 sm9 v-if="selectedNode && selectedNode.model.type == 'Top-up'" >
+          <v-data-table :headers="headers" :items="premiums" rows-per-page-text="" :loading="loading">
+            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-center sm3">{{ props.item.RowNumber }}</td>
+              <td class="text-xs-center sm3">{{ props.item.PLTP_GENDERBASICCODE }}</td>
+              <td class="text-xs-center sm3">{{ props.item.PLTP_AGE }}</td>
+              <td class="text-xs-center sm3">{{ props.item.PLTP_PREMIUMAMOUNT }}</td>
+            </template>  
+          </v-data-table>
+        </v-flex>
+    </v-layout>
+      <!-- <v-menu offset-y v-model="showMenu" absolute :position-x="x" :position-y="y">
         <v-list>
           <v-list-tile avatar v-for="item in items" v-bind:key="item.title" @click="nodeCommand(item.title)">
             <v-list-tile-action>
@@ -30,12 +30,12 @@
             </v-list-tile-content>            
           </v-list-tile>
         </v-list>
-      </v-menu>
+      </v-menu> -->
   </div>  
 </template>
 
 <script>
-import VTree from "./v-tree/VTree";
+import VTreeview from "v-treeview";
 
 export default {
   data() {
@@ -49,6 +49,7 @@ export default {
         { text: "Premium", value: "PLTP_PREMIUMAMOUNT", align: "center" }
       ],
       valid: true,
+      openAll: true,
       treeTypes: [
         {
           type: "#",
@@ -106,50 +107,45 @@ export default {
       ],
       showMenu: false,
       x: 0,
-      y: 0,      
+      y: 0,
       treeData: [],
       selectedNode: null,
-      items: null
+      contextItems: []
     };
   },
-  computed: {    
+  computed: {
     premiums() {
       return this.$store.state.premiumsModule.premiums;
     }
   },
   methods: {
-    getTypeRule(type){
+    getTypeRule(type) {
       var typeRule = this.treeTypes.filter(t => t.type == type)[0];
       return typeRule;
     },
-    nodeCommand(command){      
-      console.log(command)
-      switch(command){
-        case 'Create Basic':        
+    contextSelected(command) {
+      switch (command) {
+        case "Create Basic":
           var node = {
-            text:"New Basic Plan",
-            type:"Basic",
+            text: "New Basic Plan",
+            type: "Basic",
             children: []
           };
-          this.selectedNode.model.children.push(node);
-
-        break;
-        case 'Create Top-up':
+          this.selectedNode.addNode(node);
+          break;
+        case "Create Top-up":
           var node = {
-            text:"New Top-up",
-            type:"Top-up",
+            text: "New Top-up",
+            type: "Top-up",
             children: []
-          };          
-          this.selectedNode.model.children.push(node);
-
-        break;
-        case 'Rename':
-          this.selectedNode.model.edit = true;
-          console.log(this.selectedNode.model);
-        break;
-        case 'Remove':
-          
-        break;
+          };
+          this.selectedNode.addNode(node);
+          break;
+        case "Rename":
+          this.selectedNode.editName();
+          break;
+        case "Remove":
+          break;
       }
     },
     showContextMenu(e) {
@@ -157,26 +153,32 @@ export default {
       this.x = 160;
       this.y = e.clientY;
       this.$nextTick(() => {
-        this.showMenu = true
-      })
+        this.showMenu = true;
+      });
     },
-    treeNodeSelected(node) {
+    selected(node) {
       //console.log(node);
       this.selectedNode = node;
-
-      this.items = [];
+      this.contextItems = [];
       var typeRule = this.getTypeRule(this.selectedNode.model.type);
-
       typeRule.valid_children.map(function(type, key) {
-        var childType = this.getTypeRule(type);        
-        var item = { title: 'Create ' + type , icon: childType.icon, type: childType };
-        this.items.push(item);
+        var childType = this.getTypeRule(type);
+        var item = {
+          title: "Create " + type,
+          icon: childType.icon,
+          type: childType
+        };
+        this.contextItems.push(item);
       }, this);
-      
-      this.items.push({ title: 'Rename', icon: 'far fa-edit' });      
-      this.items.push({ title: 'Remove', icon: 'far fa-trash-alt' });
 
-      if (this.selectedNode.model.type == "Top-up" && this.selectedNode.model.id) {
+      this.contextItems.push({ title: "Rename", icon: "far fa-edit" });
+      this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
+      console.log('type: ' + this.selectedNode.model.type);
+      console.log('id: ' + this.selectedNode.model.id);
+      if (
+        this.selectedNode.model.type == "Top-up" &&
+        this.selectedNode.model.id
+      ) {
         this.loading = true;
         this.$store
           .dispatch("premiumsModule/fetchPremiums", this.selectedNode.model.id)
@@ -195,12 +197,12 @@ export default {
       this.treeNodeSelected(node);
     });
 
-    this.$store.dispatch("plansModule/fetchPlan", this.surveyId)
-      .then(() => this.treeData = this.$store.state.plansModule.plan.Plans);
-    
+    this.$store
+      .dispatch("plansModule/fetchPlan", this.surveyId)
+      .then(() => (this.treeData = this.$store.state.plansModule.plan.Plans));
   },
   components: {
-    VTree    
+    VTreeview
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="surveys" class="flex xs11">
+  <div id="surveys" class="flex xs12">
     <SurveysSearchForm></SurveysSearchForm>
     <SurveyList></SurveyList> 
   </div>

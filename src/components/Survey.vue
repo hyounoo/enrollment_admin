@@ -1,27 +1,24 @@
 <template>
-<v-tabs app centered >
-    <v-tabs-bar class="cyan" dark >
-      <v-tabs-slider class="yellow"></v-tabs-slider>
-      <v-tabs-item :href="'#tab-header'">
-        Survey Header
-      </v-tabs-item>
-      <v-tabs-item v-if="survey && survey.SVY_SURVEYID != 0" :href="'#tab-plan'">
-        Survey Plan
-      </v-tabs-item>
-      <v-tabs-item v-if="survey && survey.SVY_SURVEYID != 0" :href="'#tab-content'">
-        Survey Content
-      </v-tabs-item>
-    </v-tabs-bar>
-    <v-tabs-items>
-      <v-tabs-content :id="'tab-header'">
+  <v-tabs color="cyan" dark slider-color="yellow" grow>
+    <v-tab :href="'#tab-header'">
+      Survey Header
+    </v-tab>
+    <v-tab v-if="survey && survey.SVY_SURVEYID != 0" :href="'#tab-plan'">
+      Survey Plan
+    </v-tab>
+    <v-tab v-if="survey && survey.SVY_SURVEYID != 0" :href="'#tab-content'">
+      Survey Content
+    </v-tab>
+    <v-tabs-items :touchless="true">
+      <v-tab-item :id="'tab-header'">
         <SurveyHeader></SurveyHeader>        
-      </v-tabs-content>
-      <v-tabs-content :id="'tab-plan'">
+      </v-tab-item>
+      <v-tab-item :id="'tab-plan'">
         <SurveyPlan></SurveyPlan>
-      </v-tabs-content>
-      <v-tabs-content :id="'tab-content'">
+      </v-tab-item>
+      <v-tab-item :id="'tab-content'">
         <SurveyContent></SurveyContent>
-      </v-tabs-content>
+      </v-tab-item>
     </v-tabs-items>
   </v-tabs>
 </template>
@@ -49,7 +46,7 @@ export default {
     this.$store.dispatch("assigneesModule/fetchAssignees");
     this.$store
       .dispatch("surveysModule/fetchSurvey", this.surveyId)
-      .then(() => {        
+      .then(() => {
         this.$store
           .dispatch("programsModule/fetchPrograms", this.survey.SVY_CLIENTID)
           .then(() => this.$store.dispatch("setLoadingStatus", false));
