@@ -4,33 +4,77 @@
   </div>
   <div v-else id="surveyPlan" class="flex xs12">
     <v-layout row wrap class="my-3" elevation-9 ml-3 mr-3 >      
-        <v-flex xs12 sm3 pa-3 >
-          <v-treeview v-model="treeData" :treeTypes="treeTypes" @selected="selected" :openAll="openAll" :contextItems="contextItems" @contextSelected="contextSelected"></v-treeview>
-        </v-flex>
-        <v-flex xs12 sm9 v-if="selectedNode && selectedNode.model.type == 'Top-up'" >
-          <v-data-table :headers="headers" :items="premiums" rows-per-page-text="" :loading="loading">
-            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-            <template slot="items" slot-scope="props">
-              <td class="text-xs-center sm3">{{ props.item.RowNumber }}</td>
-              <td class="text-xs-center sm3">{{ props.item.PLTP_GENDERBASICCODE }}</td>
-              <td class="text-xs-center sm3">{{ props.item.PLTP_AGE }}</td>
-              <td class="text-xs-center sm3">{{ props.item.PLTP_PREMIUMAMOUNT }}</td>
-            </template>  
-          </v-data-table>
-        </v-flex>
+      <v-flex xs12 sm3 pa-3 >
+        <v-treeview v-model="treeData" :treeTypes="treeTypes" @selected="selected" :openAll="openAll" :contextItems="contextItems" @contextSelected="contextSelected"></v-treeview>
+      </v-flex>
+      <v-flex xs12 sm9 v-if="selectedNode && selectedNode.model.type == 'Top-up'" >
+        <v-data-table :headers="headers" :items="premiums" rows-per-page-text="" :loading="loading">
+          <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+          <template slot="items" slot-scope="props">
+            <td class="text-xs-center sm3">{{ props.item.RowNumber }}</td>
+            <td class="text-xs-center sm3">{{ props.item.PLTP_GENDERBASICCODE }}</td>
+            <td class="text-xs-center sm3">{{ props.item.PLTP_AGE }}</td>
+            <td class="text-xs-center sm3">{{ props.item.PLTP_PREMIUMAMOUNT }}</td>
+          </template>  
+        </v-data-table>
+      </v-flex>      
     </v-layout>
-      <!-- <v-menu offset-y v-model="showMenu" absolute :position-x="x" :position-y="y">
-        <v-list>
-          <v-list-tile avatar v-for="item in items" v-bind:key="item.title" @click="nodeCommand(item.title)">
-            <v-list-tile-action>
-              <i v-if="item.icon" :class="item.icon" style="margin:0 auto;"></i>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title v-text="item.title"></v-list-tile-title>
-            </v-list-tile-content>            
-          </v-list-tile>
-        </v-list>
-      </v-menu> -->
+    <v-speed-dial
+      v-model="fab"
+      :bottom="bottom"
+      :right="right"
+      :direction="direction"
+      :transition="transition"
+      class="hidden-md-and-up"
+    >
+      <v-btn
+        slot="activator"
+        color="blue darken-2"
+        dark
+        fab
+        hover
+        v-model="fab"
+      >
+        <v-icon>account_circle</v-icon>
+        <v-icon>close</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="green"
+      >
+        <v-icon>edit</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="indigo"
+      >
+        <v-icon>add</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="red"
+      >
+        <v-icon>delete</v-icon>
+      </v-btn>
+    </v-speed-dial>
+    <!-- <v-menu offset-y v-model="showMenu" absolute :position-x="x" :position-y="y">
+      <v-list>
+        <v-list-tile avatar v-for="item in items" v-bind:key="item.title" @click="nodeCommand(item.title)">
+          <v-list-tile-action>
+            <i v-if="item.icon" :class="item.icon" style="margin:0 auto;"></i>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+          </v-list-tile-content>            
+        </v-list-tile>
+      </v-list>
+    </v-menu>  -->
   </div>  
 </template>
 
@@ -110,7 +154,12 @@ export default {
       y: 0,
       treeData: [],
       selectedNode: null,
-      contextItems: []
+      contextItems: [],
+      fab: false,
+      direction: "top",
+      right: true,
+      bottom: true,
+      transition: "slide-y-reverse-transition"
     };
   },
   computed: {
@@ -173,8 +222,8 @@ export default {
 
       this.contextItems.push({ title: "Rename", icon: "far fa-edit" });
       this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
-      console.log('type: ' + this.selectedNode.model.type);
-      console.log('id: ' + this.selectedNode.model.id);
+      console.log("type: " + this.selectedNode.model.type);
+      console.log("id: " + this.selectedNode.model.id);
       if (
         this.selectedNode.model.type == "Top-up" &&
         this.selectedNode.model.id
@@ -219,4 +268,12 @@ export default {
 table.table thead th:not(:first-child) {
   padding: 0;
 }
+
+#surveyPlan .speed-dial {
+    position: absolute;
+  }
+
+  #surveyPlan .btn--floating {
+    position: relative;
+  }
 </style>

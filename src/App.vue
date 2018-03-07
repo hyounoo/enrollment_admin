@@ -23,6 +23,15 @@
         <img :src="require('@/assets/android-icon-36x36.png')" alt="Marsh">
       </router-link>
       <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-badge class="ml-5">
+        <span slot="badge">6</span>
+        <v-icon large color="grey lighten-1">account_box</v-icon>
+      </v-badge>
+
+      <v-badge color="red" class="ml-5">
+        <span slot="badge">!</span>
+        <v-icon large color="grey">mail</v-icon>
+      </v-badge>
     </v-toolbar>
     <v-content>
       <router-view/>
@@ -117,12 +126,12 @@ export default {
           url: "/home"
         },
         {
-          icon: "bubble_chart",
+          icon: "description",
           title: "Surveys",
           url: "/surveys"
         },
         {
-          icon: "bubble_chart",
+          icon: "assessment",
           title: "Reports",
           url: "/reports"
         }

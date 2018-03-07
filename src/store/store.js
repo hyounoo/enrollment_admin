@@ -9,6 +9,7 @@ import yearsModule from './modules/yearsModule';
 import premiumsModule from './modules/premiumsModule';
 import plansModule from './modules/plansModule';
 import contentsModule from './modules/contentsModule';
+import reportsModule from './modules/reportsModule';
 
 Vue.use(Vuex);
 
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     yearsModule: yearsModule,
     premiumsModule: premiumsModule,
     plansModule: plansModule,
-    contentsModule: contentsModule
+    contentsModule: contentsModule,
+    reportsModule: reportsModule
   }
 });

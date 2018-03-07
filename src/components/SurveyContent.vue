@@ -3,7 +3,7 @@
     <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
   </div>
   <div v-else id="surveyContent">
-    <v-tabs color="green" dark slider-color="yellow" grow>
+    <v-tabs color="green" dark slider-color="yellow" grow class="elevation-9 ma-3">
       <v-tab :href="'#tab-clientLogo'">
         Client Logo
       </v-tab>
